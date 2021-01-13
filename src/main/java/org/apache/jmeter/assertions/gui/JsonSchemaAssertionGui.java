@@ -14,7 +14,7 @@ import java.awt.*;
 public class JsonSchemaAssertionGui extends AbstractAssertionGui implements ChangeListener {
 
     private JLabeledTextField json;
-    private JLabeledTextArea schema;
+    private JTextArea schema;
 
     public JsonSchemaAssertionGui(){
         init();
@@ -27,11 +27,21 @@ public class JsonSchemaAssertionGui extends AbstractAssertionGui implements Chan
         VerticalPanel panel = new VerticalPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
         json = new JLabeledTextField("Json path exists:");
-        schema = new JLabeledTextArea("Expected JsonSchema:");
-        schema.setBounds(0,0,100,600);
-        schema.setToolTipText("please input json schema");
+        //schema = new JLabeledTextArea("Expected JsonSchema:");
+        //schema.setToolTipText("please input json schema");
+        //修改textarea的行数，因为原先的JLabeledTextArea限制行数为4，jsonSchema的行数基本都大于4，十分不好
+        JPanel jPanel = new JPanel();
+        jPanel.setLayout(new BorderLayout());
+        JLabel label = new JLabel("Expected JsonSchema:");
+        schema = new JTextArea();
+        schema.setRows(16);
+        schema.setLineWrap(true);
+        schema.setWrapStyleWord(true);
+        jPanel.add(label, BorderLayout.NORTH);
+        jPanel.add(new JScrollPane(schema), BorderLayout.CENTER);
+
         panel.add(json);
-        panel.add(schema);
+        panel.add(jPanel);
         this.add(panel, BorderLayout.CENTER);
     }
 
